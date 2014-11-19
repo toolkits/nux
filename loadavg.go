@@ -26,7 +26,7 @@ func LoadAvg() (*Loadavg, error) {
 		return nil, err
 	}
 
-	L := strings.Split(data, " ")
+	L := strings.Fields(data)
 	if loadAvg.Avg1min, err = strconv.ParseFloat(L[0], 64); err != nil {
 		return nil, err
 	}

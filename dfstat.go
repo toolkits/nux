@@ -172,7 +172,7 @@ func BuildDeviceUsage(_fsSpec, _fsFile, _fsVfstype string) (*DeviceUsage, error)
 	if fs.Files == 0 {
 		ret.InodesUsedPercent = 100.0
 	} else {
-		ret.InodesUsedPercent = float64(float64(ret.InodesUsed) * 100.0 / float64(ret.InodesAll))
+		ret.InodesUsedPercent = float64(ret.InodesUsed) * 100.0 / float64(ret.InodesAll)
 	}
 	ret.InodesFreePercent = 100.0 - ret.InodesUsedPercent
 

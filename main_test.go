@@ -24,4 +24,15 @@ func TestMetrics(t *testing.T) {
 	fmt.Print("LoadAvg:")
 	fmt.Println(LoadAvg())
 
+	// cpuinfo
+	fmt.Print("NumCpu:")
+	fmt.Println(NumCpu())
+
+	fmt.Print("CpuMHz:")
+	fmt.Println(CpuMHz())
+
+	// cpustat
+	fmt.Print("CurrentProcStat:")
+	fmt.Println(CurrentProcStat())
+
 }

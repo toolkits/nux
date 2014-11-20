@@ -155,7 +155,7 @@ func BuildDeviceUsage(_fsSpec, _fsFile, _fsVfstype string) (*DeviceUsage, error)
 
 	// blocks
 	used := fs.Blocks - fs.Bfree
-	ret.BlocksAll = uint64(fs.Frsize) * (used + fs.Bavail)
+	ret.BlocksAll = uint64(fs.Frsize) * fs.Blocks
 	ret.BlocksUsed = uint64(fs.Frsize) * used
 	ret.BlocksFree = uint64(fs.Frsize) * fs.Bavail
 	if fs.Blocks == 0 {

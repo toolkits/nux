@@ -7,7 +7,7 @@ import (
 
 func TestMetrics(t *testing.T) {
 
-	// kernel
+	fmt.Println("======kernel======")
 	fmt.Print("KernelMaxFiles:")
 	fmt.Println(KernelMaxFiles())
 
@@ -20,19 +20,28 @@ func TestMetrics(t *testing.T) {
 	fmt.Print("KernelHostname:")
 	fmt.Println(KernelHostname())
 
-	// loadavg
+	fmt.Println("======loadavg======")
 	fmt.Print("LoadAvg:")
 	fmt.Println(LoadAvg())
 
-	// cpuinfo
+	fmt.Println("======cpuinfo======")
 	fmt.Print("NumCpu:")
 	fmt.Println(NumCpu())
 
 	fmt.Print("CpuMHz:")
 	fmt.Println(CpuMHz())
 
-	// cpustat
+	fmt.Println("======cpustat======")
 	fmt.Print("CurrentProcStat:")
 	fmt.Println(CurrentProcStat())
+
+	fmt.Println("======dfstat======")
+	fmt.Print("ListMountPoint:")
+	mountPoints, err := ListMountPoint()
+	fmt.Println(mountPoints, err)
+	fmt.Print("DeviceUsage:")
+	for _, arr := range mountPoints {
+		fmt.Println(BuildDeviceUsage(arr[0], arr[1], arr[2]))
+	}
 
 }

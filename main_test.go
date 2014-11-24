@@ -44,4 +44,8 @@ func TestMetrics(t *testing.T) {
 		fmt.Println(BuildDeviceUsage(arr[0], arr[1], arr[2]))
 	}
 
+	fmt.Println("======ifstat======")
+	fmt.Print("NetIfs:")
+	fmt.Println(NetIfs([]string{"eth"}))
+
 }

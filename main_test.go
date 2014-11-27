@@ -37,17 +37,17 @@ func TestMetrics(t *testing.T) {
 	} else {
 		fmt.Print("CPU :")
 		fmt.Println(ps.Cpu)
-		for idx, item := range ps.Cpus {
-			fmt.Printf("CPU%d:", idx)
-			fmt.Println(item)
+		for i, o := range ps.Cpus {
+			fmt.Printf("CPU%d:", i)
+			fmt.Println(o)
 		}
 	}
 
 	fmt.Println("======dfstat======")
-	if mountPoints, err := ListMountPoint(); err != nil {
+	if L, err := ListMountPoint(); err != nil {
 		fmt.Println("error:", err)
 	} else {
-		for _, arr := range mountPoints {
+		for _, arr := range L {
 			fmt.Println(BuildDeviceUsage(arr[0], arr[1], arr[2]))
 		}
 	}
@@ -69,5 +69,8 @@ func TestMetrics(t *testing.T) {
 			fmt.Println(i)
 		}
 	}
+
+	fmt.Println("======MemInfo:======")
+	fmt.Println(MemInfo())
 
 }

@@ -128,20 +128,11 @@ type DeviceUsage struct {
 }
 
 func (this *DeviceUsage) String() string {
-	return fmt.Sprintf("<FsSpec:%s, FsFile:%s, FsVfstype:%s, BAll:%d, BUsed:%d, BFree:%d, BPUsed:%f, BPFree:%f, IAll:%d, IUsed:%d, IFree:%d, IPUsed:%f, IPFree:%f>",
+	return fmt.Sprintf("<FsSpec:%s, FsFile:%s, FsVfstype:%s, BPFree:%f...>",
 		this.FsSpec,
 		this.FsFile,
 		this.FsVfstype,
-		this.BlocksAll,
-		this.BlocksUsed,
-		this.BlocksFree,
-		this.BlocksUsedPercent,
-		this.BlocksFreePercent,
-		this.InodesAll,
-		this.InodesUsed,
-		this.InodesFree,
-		this.InodesUsedPercent,
-		this.InodesFreePercent)
+		this.BlocksFreePercent)
 }
 
 func BuildDeviceUsage(_fsSpec, _fsFile, _fsVfstype string) (*DeviceUsage, error) {

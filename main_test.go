@@ -32,20 +32,42 @@ func TestMetrics(t *testing.T) {
 	fmt.Println(CpuMHz())
 
 	fmt.Println("======cpustat======")
-	fmt.Print("CurrentProcStat:")
-	fmt.Println(CurrentProcStat())
-
-	fmt.Println("======dfstat======")
-	fmt.Print("ListMountPoint:")
-	mountPoints, err := ListMountPoint()
-	fmt.Println(mountPoints, err)
-	fmt.Print("DeviceUsage:")
-	for _, arr := range mountPoints {
-		fmt.Println(BuildDeviceUsage(arr[0], arr[1], arr[2]))
+	if ps, err := CurrentProcStat(); err != nil {
+		fmt.Println("error:", err)
+	} else {
+		fmt.Print("CPU :")
+		fmt.Println(ps.Cpu)
+		for idx, item := range ps.Cpus {
+			fmt.Printf("CPU%d:", idx)
+			fmt.Println(item)
+		}
 	}
 
-	fmt.Println("======ifstat======")
-	fmt.Print("NetIfs:")
-	fmt.Println(NetIfs([]string{"eth"}))
+	fmt.Println("======dfstat======")
+	if mountPoints, err := ListMountPoint(); err != nil {
+		fmt.Println("error:", err)
+	} else {
+		for _, arr := range mountPoints {
+			fmt.Println(BuildDeviceUsage(arr[0], arr[1], arr[2]))
+		}
+	}
+
+	fmt.Println("======NetIfs======")
+	if L, err := NetIfs([]string{}); err != nil {
+		fmt.Println("error:", err)
+	} else {
+		for _, i := range L {
+			fmt.Println(i)
+		}
+	}
+
+	fmt.Println("======ListDiskStats======")
+	if L, err := ListDiskStats(); err != nil {
+		fmt.Println("error:", err)
+	} else {
+		for _, i := range L {
+			fmt.Println(i)
+		}
+	}
 
 }

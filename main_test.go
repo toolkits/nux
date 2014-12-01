@@ -82,4 +82,20 @@ func TestMetrics(t *testing.T) {
 	fmt.Println("=========ListeningPorts:=======")
 	fmt.Println(ListeningPorts())
 
+	fmt.Println("=========Procs:=======")
+	if L, err := AllProcs(); err != nil {
+		fmt.Println("error:", err)
+	} else {
+		for i, item := range L {
+			fmt.Println(item)
+			if i == 10 {
+				fmt.Println("and more...")
+				break
+			}
+		}
+	}
+
+	fmt.Println("==============ss -s===============")
+	fmt.Println(SocketStatSummary())
+
 }

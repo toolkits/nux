@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"bytes"
 	"fmt"
+	"github.com/toolkits/file"
 	"io"
 	"io/ioutil"
 	"runtime"
@@ -23,20 +24,20 @@ func CpuMHz() (mhz string, err error) {
 	}
 
 	reader := bufio.NewReader(bytes.NewBuffer(bs))
-	var line []byte
 
 	for {
-		line, _, err = reader.ReadLine()
+		var lineBytes []byte
+		lineBytes, err = file.ReadLine(reader)
 		if err == io.EOF {
 			return
 		}
 
-		li := string(line)
-		if !strings.Contains(li, "MHz") {
+		line := string(lineBytes)
+		if !strings.Contains(line, "MHz") {
 			continue
 		}
 
-		arr := strings.Split(li, ":")
+		arr := strings.Split(line, ":")
 		if len(arr) != 2 {
 			return "", fmt.Errorf("%s content format error", f)
 		}

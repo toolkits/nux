@@ -57,7 +57,10 @@ func ListMountPoint() ([][3]string, error) {
 	for {
 		line, err := file.ReadLine(reader)
 		if err == io.EOF {
+			err = nil
 			break
+		} else if err != nil {
+			return nil, err
 		}
 
 		fields := strings.Fields(string(line))

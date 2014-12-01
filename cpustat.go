@@ -70,7 +70,10 @@ func CurrentProcStat() (*ProcStat, error) {
 	for {
 		line, err := file.ReadLine(reader)
 		if err == io.EOF {
+			err = nil
 			break
+		} else if err != nil {
+			return ps, err
 		}
 		parseLine(line, ps)
 	}

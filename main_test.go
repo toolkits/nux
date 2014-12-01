@@ -73,4 +73,13 @@ func TestMetrics(t *testing.T) {
 	fmt.Println("======MemInfo:======")
 	fmt.Println(MemInfo())
 
+	fmt.Println("=========TcpExt:=======")
+	fmt.Println(Netstat("TcpExt"))
+
+	fmt.Println("=========IpExt:=======")
+	fmt.Println(Netstat("IpExt"))
+
+	fmt.Println("=========ListeningPorts:=======")
+	fmt.Println(ListeningPorts())
+
 }

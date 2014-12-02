@@ -98,4 +98,11 @@ func TestMetrics(t *testing.T) {
 	fmt.Println("==============ss -s===============")
 	fmt.Println(SocketStatSummary())
 
+	fmt.Println("=============uptime:==============")
+	days, hours, mins, err := SystemUptime()
+	if err != nil {
+		fmt.Println("error:", err)
+	} else {
+		fmt.Printf("%d days, %d hours, %d mins\n", days, hours, mins)
+	}
 }

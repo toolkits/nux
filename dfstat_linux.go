@@ -3,7 +3,6 @@ package nux
 import (
 	"bufio"
 	"bytes"
-	"fmt"
 	"github.com/toolkits/file"
 	"io"
 	"io/ioutil"

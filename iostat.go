@@ -9,6 +9,7 @@ import (
 	"io/ioutil"
 	"strconv"
 	"strings"
+	"time"
 )
 
 type DiskStats struct {
@@ -26,6 +27,7 @@ type DiskStats struct {
 	IosInProgress     uint64 // Number of actual I/O requests currently in flight.
 	MsecTotal         uint64 // Amount of time during which ios_in_progress >= 1.
 	MsecWeightedTotal uint64 // Measure of recent I/O completion time and backlog.
+	TS                time.Time
 }
 
 func (this *DiskStats) String() string {
@@ -126,8 +128,9 @@ func ListDiskStats() ([]*DiskStats, error) {
 			if item.MsecWeightedTotal, err = strconv.ParseUint(fields[13], 10, 64); err != nil {
 				return nil, err
 			}
-
 		}
+
+		item.TS = time.Now()
 		ret = append(ret, item)
 	}
 	return ret, nil

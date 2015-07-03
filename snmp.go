@@ -10,11 +10,10 @@ import (
 	"strings"
 )
 
-// @param ext e.g. TcpExt or IpExt
-func Netstat(ext string) (ret map[string]uint64, err error) {
-	ret = make(map[string]uint64)
+func Snmp(title string) (ret map[string]int64, err error) {
+	ret = make(map[string]int64)
 	var contents []byte
-	contents, err = ioutil.ReadFile("/proc/net/netstat")
+	contents, err = ioutil.ReadFile("/proc/net/snmp")
 	if err != nil {
 		return
 	}
@@ -36,8 +35,8 @@ func Netstat(ext string) (ret map[string]uint64, err error) {
 			continue
 		}
 
-		title := strings.TrimSpace(line[:idx])
-		if title == ext {
+		prefix := strings.TrimSpace(line[:idx])
+		if prefix == title {
 			ths := strings.Fields(strings.TrimSpace(line[idx+1:]))
 			// the next line must be values
 			bs, err = file.ReadLine(reader)
@@ -48,7 +47,7 @@ func Netstat(ext string) (ret map[string]uint64, err error) {
 			valLine := string(bs)
 			tds := strings.Fields(strings.TrimSpace(valLine[idx+1:]))
 			for i := 0; i < len(ths); i++ {
-				ret[ths[i]], err = strconv.ParseUint(tds[i], 10, 64)
+				ret[ths[i]], err = strconv.ParseInt(tds[i], 10, 64)
 				if err != nil {
 					return
 				}

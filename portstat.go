@@ -13,9 +13,17 @@ import (
 )
 
 func ListeningPorts() ([]int64, error) {
+	return listeningPorts("ss", "-t", "-l", "-n")
+}
+
+func UdpPorts() ([]int64, error) {
+	return listeningPorts("ss", "-u", "-a", "-n")
+}
+
+func listeningPorts(name string, args ...string) ([]int64, error) {
 	ports := []int64{}
 
-	bs, err := sys.CmdOutBytes("ss", "-t", "-l", "-n")
+	bs, err := sys.CmdOutBytes(name, args...)
 	if err != nil {
 		return ports, err
 	}
@@ -41,7 +49,7 @@ func ListeningPorts() ([]int64, error) {
 		fieldsLen := len(fields)
 
 		if fieldsLen != 4 && fieldsLen != 5 {
-			return ports, fmt.Errorf("output of [ss -t -l -n] format not supported")
+			return ports, fmt.Errorf("output of %s format not supported", name)
 		}
 
 		portColumnIndex := 2

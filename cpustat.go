@@ -95,7 +95,7 @@ func parseLine(line []byte, ps *ProcStat) {
 
 	if strings.HasPrefix(fieldName, "cpu") {
 		idx, err := strconv.Atoi(fieldName[3:])
-		if err != nil {
+		if err != nil || idx >= len(ps.Cpus) {
 			return
 		}
 

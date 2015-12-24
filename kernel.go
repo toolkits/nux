@@ -1,38 +1,38 @@
 package nux
 
 import (
-	"fmt"
-	"github.com/toolkits/file"
-	"os"
-	"strconv"
-	"strings"
+    "fmt"
+    "github.com/toolkits/file"
+    "os"
+    "strconv"
+    "strings"
 )
 
 func KernelMaxFiles() (uint64, error) {
-	return file.ToUint64("/proc/sys/fs/file-max")
+    return file.ToUint64("/proc/sys/fs/file-max")
 }
 
 func KernelAllocateFiles() (ret uint64, err error) {
-	var content string
-	file_nr := "/proc/sys/fs/file-nr"
-	content, err = file.ToTrimString(file_nr)
-	if err != nil {
-		return
-	}
+    var content string
+    file_nr := "/proc/sys/fs/file-nr"
+    content, err = file.ToTrimString(file_nr)
+    if err != nil {
+        return
+    }
 
-	arr := strings.Fields(content)
-	if len(arr) != 3 {
-		err = fmt.Errorf("%s format error", file_nr)
-		return
-	}
+    arr := strings.Fields(content)
+    if len(arr) != 3 {
+        err = fmt.Errorf("%s format error", file_nr)
+        return
+    }
 
-	return strconv.ParseUint(arr[0], 10, 64)
+    return strconv.ParseUint(arr[0], 10, 64)
 }
 
 func KernelMaxProc() (uint64, error) {
-	return file.ToUint64("/proc/sys/kernel/pid_max")
+    return file.ToUint64("/proc/sys/kernel/pid_max")
 }
 
 func KernelHostname() (string, error) {
-	return os.Hostname()
+    return os.Hostname()
 }

@@ -74,60 +74,58 @@ func ListDiskStats() ([]*DiskStats, error) {
 		}
 
 		item := &DiskStats{}
-		for i := 0; i < size; i++ {
-			if item.Major, err = strconv.Atoi(fields[0]); err != nil {
-				return nil, err
-			}
+		if item.Major, err = strconv.Atoi(fields[0]); err != nil {
+			return nil, err
+		}
 
-			if item.Minor, err = strconv.Atoi(fields[1]); err != nil {
-				return nil, err
-			}
+		if item.Minor, err = strconv.Atoi(fields[1]); err != nil {
+			return nil, err
+		}
 
-			item.Device = fields[2]
+		item.Device = fields[2]
 
-			if item.ReadRequests, err = strconv.ParseUint(fields[3], 10, 64); err != nil {
-				return nil, err
-			}
+		if item.ReadRequests, err = strconv.ParseUint(fields[3], 10, 64); err != nil {
+			return nil, err
+		}
 
-			if item.ReadMerged, err = strconv.ParseUint(fields[4], 10, 64); err != nil {
-				return nil, err
-			}
+		if item.ReadMerged, err = strconv.ParseUint(fields[4], 10, 64); err != nil {
+			return nil, err
+		}
 
-			if item.ReadSectors, err = strconv.ParseUint(fields[5], 10, 64); err != nil {
-				return nil, err
-			}
+		if item.ReadSectors, err = strconv.ParseUint(fields[5], 10, 64); err != nil {
+			return nil, err
+		}
 
-			if item.MsecRead, err = strconv.ParseUint(fields[6], 10, 64); err != nil {
-				return nil, err
-			}
+		if item.MsecRead, err = strconv.ParseUint(fields[6], 10, 64); err != nil {
+			return nil, err
+		}
 
-			if item.WriteRequests, err = strconv.ParseUint(fields[7], 10, 64); err != nil {
-				return nil, err
-			}
+		if item.WriteRequests, err = strconv.ParseUint(fields[7], 10, 64); err != nil {
+			return nil, err
+		}
 
-			if item.WriteMerged, err = strconv.ParseUint(fields[8], 10, 64); err != nil {
-				return nil, err
-			}
+		if item.WriteMerged, err = strconv.ParseUint(fields[8], 10, 64); err != nil {
+			return nil, err
+		}
 
-			if item.WriteSectors, err = strconv.ParseUint(fields[9], 10, 64); err != nil {
-				return nil, err
-			}
+		if item.WriteSectors, err = strconv.ParseUint(fields[9], 10, 64); err != nil {
+			return nil, err
+		}
 
-			if item.MsecWrite, err = strconv.ParseUint(fields[10], 10, 64); err != nil {
-				return nil, err
-			}
+		if item.MsecWrite, err = strconv.ParseUint(fields[10], 10, 64); err != nil {
+			return nil, err
+		}
 
-			if item.IosInProgress, err = strconv.ParseUint(fields[11], 10, 64); err != nil {
-				return nil, err
-			}
+		if item.IosInProgress, err = strconv.ParseUint(fields[11], 10, 64); err != nil {
+			return nil, err
+		}
 
-			if item.MsecTotal, err = strconv.ParseUint(fields[12], 10, 64); err != nil {
-				return nil, err
-			}
+		if item.MsecTotal, err = strconv.ParseUint(fields[12], 10, 64); err != nil {
+			return nil, err
+		}
 
-			if item.MsecWeightedTotal, err = strconv.ParseUint(fields[13], 10, 64); err != nil {
-				return nil, err
-			}
+		if item.MsecWeightedTotal, err = strconv.ParseUint(fields[13], 10, 64); err != nil {
+			return nil, err
 		}
 
 		item.TS = time.Now()

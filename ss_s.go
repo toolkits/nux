@@ -12,7 +12,7 @@ import (
 func SocketStatSummary() (m map[string]uint64, err error) {
 	m = make(map[string]uint64)
 	var bs []byte
-	bs, err = sys.CmdOutBytes("sh", "-c", "ss", "-s")
+	bs, err = sys.CmdOutBytes("sh", "-c", "ss -s")
 	if err != nil {
 		return
 	}

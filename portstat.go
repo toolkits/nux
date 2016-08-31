@@ -13,11 +13,11 @@ import (
 )
 
 func ListeningPorts() ([]int64, error) {
-	return listeningPorts("sh", "-c", "ss", "-t", "-l", "-n")
+	return listeningPorts("sh", "-c", "ss -t -l -n")
 }
 
 func UdpPorts() ([]int64, error) {
-	return listeningPorts("sh", "-c", "ss", "-u", "-a", "-n")
+	return listeningPorts("sh", "-c", "ss -u -a -n")
 }
 
 func listeningPorts(name string, args ...string) ([]int64, error) {

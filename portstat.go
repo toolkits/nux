@@ -4,15 +4,21 @@ import (
 	"bufio"
 	"bytes"
 	"fmt"
-	"github.com/toolkits/file"
-	"github.com/toolkits/slice"
-	"github.com/toolkits/sys"
 	"io"
 	"strconv"
 	"strings"
+
+	"github.com/toolkits/file"
+	"github.com/toolkits/slice"
+	"github.com/toolkits/sys"
 )
 
+// ListeningPorts 为了兼容老代码
 func ListeningPorts() ([]int64, error) {
+	return TcpPorts()
+}
+
+func TcpPorts() ([]int64, error) {
 	return listeningPorts("sh", "-c", "ss -t -l -n")
 }
 

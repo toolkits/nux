@@ -95,22 +95,24 @@ func BuildDeviceUsage(_fsSpec, _fsFile, _fsVfstype string) (*DeviceUsage, error)
 	ret.BlocksUsed = uint64(fs.Frsize) * used
 	ret.BlocksFree = uint64(fs.Frsize) * fs.Bavail
 	if fs.Blocks == 0 {
-		ret.BlocksUsedPercent = 100.0
+		ret.BlocksUsedPercent = 0
+		ret.BlocksFreePercent = 0
 	} else {
 		ret.BlocksUsedPercent = float64(used) * 100.0 / float64(used+fs.Bavail)
+		ret.BlocksFreePercent = 100.0 - ret.BlocksUsedPercent
 	}
-	ret.BlocksFreePercent = 100.0 - ret.BlocksUsedPercent
 
 	// inodes
 	ret.InodesAll = fs.Files
 	ret.InodesFree = fs.Ffree
 	ret.InodesUsed = fs.Files - fs.Ffree
 	if fs.Files == 0 {
-		ret.InodesUsedPercent = 100.0
+		ret.InodesUsedPercent = 0
+		ret.InodesFreePercent = 0
 	} else {
 		ret.InodesUsedPercent = float64(ret.InodesUsed) * 100.0 / float64(ret.InodesAll)
+		ret.InodesFreePercent = 100.0 - ret.InodesUsedPercent
 	}
-	ret.InodesFreePercent = 100.0 - ret.InodesUsedPercent
 
 	return ret, nil
 }

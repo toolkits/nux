@@ -3,11 +3,13 @@ package nux
 import (
 	"bufio"
 	"bytes"
-	"github.com/toolkits/file"
 	"io"
 	"io/ioutil"
+	"math"
 	"strings"
 	"syscall"
+
+	"github.com/toolkits/file"
 )
 
 // return: [][$fs_spec, $fs_file, $fs_vfstype]
@@ -104,8 +106,13 @@ func BuildDeviceUsage(_fsSpec, _fsFile, _fsVfstype string) (*DeviceUsage, error)
 
 	// inodes
 	ret.InodesAll = fs.Files
-	ret.InodesFree = fs.Ffree
-	ret.InodesUsed = fs.Files - fs.Ffree
+	if fs.Ffree == math.MaxUint64 {
+		ret.InodesFree = 0
+		ret.InodesUsed = 0
+	} else {
+		ret.InodesFree = fs.Ffree
+		ret.InodesUsed = fs.Files - fs.Ffree
+	}
 	if fs.Files == 0 {
 		ret.InodesUsedPercent = 0
 		ret.InodesFreePercent = 0

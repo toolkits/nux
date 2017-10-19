@@ -4,11 +4,12 @@ import (
 	"bufio"
 	"bytes"
 	"fmt"
-	"github.com/toolkits/file"
 	"io"
 	"io/ioutil"
 	"strconv"
 	"strings"
+
+	"github.com/toolkits/file"
 )
 
 type Mem struct {
@@ -19,21 +20,27 @@ type Mem struct {
 	SwapTotal uint64
 	SwapUsed  uint64
 	SwapFree  uint64
+	// MemAvailable is in /proc/meminfo (kernel 3.14+)
+	// https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=34e431b0ae398fc54ea69ff85ec700722c9da773
+	// https://www.kernel.org/doc/Documentation/filesystems/proc.txt
+	MemAvailable  uint64
+	MemAvaSupport bool
 }
 
 func (this *Mem) String() string {
-	return fmt.Sprintf("<MemTotal:%d, MemFree:%d, Buffers:%d, Cached:%d...>", this.MemTotal, this.MemFree, this.Buffers, this.Cached)
+	return fmt.Sprintf("<MemTotal:%d, MemFree:%d, MemAvailable:%d, Buffers:%d, Cached:%d...>", this.MemTotal, this.MemFree, this.MemAvailable, this.Buffers, this.Cached)
 }
 
 var Multi uint64 = 1024
 
 var WANT = map[string]struct{}{
-	"Buffers:":   struct{}{},
-	"Cached:":    struct{}{},
-	"MemTotal:":  struct{}{},
-	"MemFree:":   struct{}{},
-	"SwapTotal:": struct{}{},
-	"SwapFree:":  struct{}{},
+	"Buffers:":      struct{}{},
+	"Cached:":       struct{}{},
+	"MemTotal:":     struct{}{},
+	"MemFree:":      struct{}{},
+	"MemAvailable:": struct{}{},
+	"SwapTotal:":    struct{}{},
+	"SwapFree:":     struct{}{},
 }
 
 func MemInfo() (*Mem, error) {
@@ -43,6 +50,7 @@ func MemInfo() (*Mem, error) {
 	}
 
 	memInfo := &Mem{}
+	memInfo.MemAvaSupport = false
 
 	reader := bufio.NewReader(bytes.NewBuffer(contents))
 
@@ -73,6 +81,9 @@ func MemInfo() (*Mem, error) {
 				memInfo.MemTotal = val * Multi
 			case "MemFree:":
 				memInfo.MemFree = val * Multi
+			case "MemAvailable:":
+				memInfo.MemAvaSupport = true
+				memInfo.MemAvailable = val * Multi
 			case "SwapTotal:":
 				memInfo.SwapTotal = val * Multi
 			case "SwapFree:":

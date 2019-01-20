@@ -6,9 +6,11 @@ import (
 )
 
 var FSSPEC_IGNORE = map[string]struct{}{
-	"none":  struct{}{},
-	"nodev": struct{}{},
-	"proc":  struct{}{},
+	"none":      struct{}{},
+	"nodev":     struct{}{},
+	"proc":      struct{}{},
+	"hugetlbfs": struct{}{},
+	"mqueue":    struct{}{},
 }
 
 var FSTYPE_IGNORE = map[string]struct{}{

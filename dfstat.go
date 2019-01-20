@@ -8,6 +8,7 @@ import (
 var FSSPEC_IGNORE = map[string]struct{}{
 	"none":  struct{}{},
 	"nodev": struct{}{},
+	"proc":  struct{}{},
 }
 
 var FSTYPE_IGNORE = map[string]struct{}{

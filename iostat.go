@@ -4,12 +4,13 @@ import (
 	"bufio"
 	"bytes"
 	"fmt"
-	"github.com/toolkits/file"
 	"io"
 	"io/ioutil"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/toolkits/file"
 )
 
 type DiskStats struct {
@@ -27,6 +28,10 @@ type DiskStats struct {
 	IosInProgress     uint64 // Number of actual I/O requests currently in flight.
 	MsecTotal         uint64 // Amount of time during which ios_in_progress >= 1.
 	MsecWeightedTotal uint64 // Measure of recent I/O completion time and backlog.
+	DiscardRequests   uint64 // Total number of discards completed successfully.
+	DiscardMerged     uint64 // Adjacent discards requests merged in a single req.
+	DiscardSectors    uint64 // Total number of sectors discarded successfully.
+	MsecDiscard       uint64 // Total number of ms spent by all discards.
 	TS                time.Time
 }
 
@@ -69,7 +74,7 @@ func ListDiskStats() ([]*DiskStats, error) {
 
 		size := len(fields)
 		// kernel version too low
-		if size != 14 {
+		if size != 14 && size != 18 {
 			continue
 		}
 
@@ -126,6 +131,24 @@ func ListDiskStats() ([]*DiskStats, error) {
 
 		if item.MsecWeightedTotal, err = strconv.ParseUint(fields[13], 10, 64); err != nil {
 			return nil, err
+		}
+
+		if size >= 18 {
+			if item.DiscardRequests, err = strconv.ParseUint(fields[14], 10, 64); err != nil {
+				return nil, err
+			}
+
+			if item.DiscardMerged, err = strconv.ParseUint(fields[15], 10, 64); err != nil {
+				return nil, err
+			}
+
+			if item.DiscardSectors, err = strconv.ParseUint(fields[16], 10, 64); err != nil {
+				return nil, err
+			}
+
+			if item.MsecDiscard, err = strconv.ParseUint(fields[17], 10, 64); err != nil {
+				return nil, err
+			}
 		}
 
 		item.TS = time.Now()

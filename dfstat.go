@@ -18,6 +18,7 @@ var FSTYPE_IGNORE = map[string]struct{}{
 	"debugfs":    struct{}{},
 	"devpts":     struct{}{},
 	"devtmpfs":   struct{}{},
+	"iso9660":    struct{}{},
 	"rpc_pipefs": struct{}{},
 	"rootfs":     struct{}{},
 	"overlay":    struct{}{},

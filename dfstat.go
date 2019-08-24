@@ -22,6 +22,7 @@ var FSTYPE_IGNORE = map[string]struct{}{
 	"rootfs":     struct{}{},
 	"overlay":    struct{}{},
 	"tmpfs":      struct{}{},
+	"squashfs":   struct{}{},
 }
 
 var FSFILE_PREFIX_IGNORE = []string{

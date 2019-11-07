@@ -15,7 +15,7 @@ func init() {
 // Root 获取系统变量
 func Root() string {
 	root := os.Getenv(nuxRootFs)
-	if !strings.HasSuffix(root, string(os.PathSeparator)) {
+	if !strings.HasPrefix(root, string(os.PathSeparator)) {
 		return ""
 	}
 	root = strings.TrimSuffix(root, string(os.PathSeparator))
@@ -29,9 +29,6 @@ func pathExists(path string) bool {
 	fi, err := os.Stat(path)
 	if err == nil {
 		return fi.IsDir()
-	}
-	if os.IsNotExist(err) {
-		return false
 	}
 	return false
 }

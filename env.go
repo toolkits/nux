@@ -1,16 +1,11 @@
 package nux
 
 import (
-	"fmt"
 	"os"
 	"strings"
 )
 
 const nuxRootFs = "NUX_ROOTFS"
-
-func init() {
-	fmt.Printf("use %s = %s as file system root", nuxRootFs, Root())
-}
 
 // Root 获取系统变量
 func Root() string {

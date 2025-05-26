@@ -32,7 +32,11 @@ type DiskStats struct {
 	DiscardMerged     uint64 // Adjacent discard requests merged in a single req.
 	DiscardSectors    uint64 // total number of sectors discarded successfully.
 	MsecDiscard       uint64 // Total number of ms spent by all discards.
-	TS                time.Time
+	// Kernel 5.5+ appends two more fields for flush requests:
+	FlushRequests uint64
+	MsecFlush     uint64
+
+	TS time.Time
 }
 
 func (this *DiskStats) String() string {
@@ -153,6 +157,16 @@ func ListDiskStats() ([]*DiskStats, error) {
 
 		if size > 17 {
 			if item.MsecDiscard, err = strconv.ParseUint(fields[17], 10, 64); err != nil {
+				return nil, err
+			}
+		}
+		if size > 18 {
+			if item.FlushRequests, err = strconv.ParseUint(fields[18], 10, 64); err != nil {
+				return nil, err
+			}
+		}
+		if size > 19 {
+			if item.MsecFlush, err = strconv.ParseUint(fields[18], 10, 64); err != nil {
 				return nil, err
 			}
 		}
